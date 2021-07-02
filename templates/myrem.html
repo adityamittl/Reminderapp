@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder-App</title>
+
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.0/dist/js/uikit-icons.min.js"></script>
+
+</head>
+<body>
+    <nav class="uk-navbar-container" uk-navbar>
+        <a class="uk-navbar-item uk-logo" href="/" style="color: cadetblue;">ReAlert</a>
+        <div class="uk-navbar-center">
+            <ul class="uk-navbar-nav">
+                <li><a href="/">Add Reminder</a></li>
+                <li class="uk-active"><a href="/myremainders">My Reminder</a></li>
+            </ul>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+                {% if user.is_authenticated %}
+                <li><a href="/accounts">{{ user }}</a></li>
+                <li><a href="/signout" >Signout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div style="width: 60%; margin: auto; margin-top: 60px;">
+        <div class="uk-child-width-1-2@s uk-grid-match" uk-grid>
+            {% if latest_question_list %}
+                {% for question in latest_question_list %}
+                    <div>
+                        <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                            <h3 class="uk-card-title" style="text-align: center;">{{ question.title }}</h3><hr>
+                            <p><strong>Description- </strong>{{ question.task }}</p>
+                            <p><strong>Date- </strong>{{ question.date }}</p>
+                            <p><strong>Time- </strong>{{ question.timer }}</p>
+                            <form action="/deletion/" method="post" style="margin:auto;">
+                                {% csrf_token %}
+                                <input type="text" id="title" name="title" value="{{ question.title}}" style="display: none;">
+                                <input type="submit" class="uk-button uk-button-text" value="Delete">
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No Reminders are available</p><br>
+                <p><a href="/">Click here</a> To add Reminders </p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
