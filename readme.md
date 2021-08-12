@@ -12,9 +12,9 @@ To run server locally follow-
 python3 manage.py runserver
 ```
 
-![Alt text](/screenshot/im2.jpg?raw=true "Optional Title")
+![Screenshot-1](https://github.com/adityamittl/Reminderapp/blob/master/screenshot/im1.png?raw=true "Add reminder")
 
-![Alt text](/screenshot/im2.jpg?raw=true "Optional Title")
+![Screeenshot-2](https://github.com/adityamittl/Reminderapp/blob/master/screenshot/im2.png?raw=true "View reminders")
 
 To Create admin user
 ```
