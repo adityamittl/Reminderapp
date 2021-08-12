@@ -15,7 +15,11 @@ def main(request):
         task = request.POST.get('task')
         date = request.POST.get('date')
         time = request.POST.get('timer')
-        ask = Profile.objects.get(user = temp1)
+        try:
+            ask = Profile.objects.get(user = temp1)
+        except:
+                print("Incomplete Profile")
+                return redirect('/complete-profile')
         print(ask.count)
         if(ask.count>5):
             if(not ask.purchased):
@@ -62,3 +66,26 @@ def delete(request):
         instance.delete()
         return redirect('myreminders')
     return render(request,'deletion.html')
+
+@login_required
+def complete_profile(request):
+    a = request.user
+    try:
+        print(a)
+        Profile.objects.get(user = a)
+        print('-----------------')
+        return redirect('/reminders/')
+    except:
+        return render(request,'profile.html')
+    if request.method=='POST':
+        usr = request.user
+        fnmae = request.POST.get('fname')
+        lname = request.POST.get('lname')
+        email = request.POST.get('email')
+        pfle = Profile()
+        pfle.user = usr
+        pfle.first_name = fnmae
+        pfle.last_name = lname
+        pfle.email = email
+        pfle.save()
+        return redirect('')
